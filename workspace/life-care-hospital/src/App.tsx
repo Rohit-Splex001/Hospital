@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import AppointmentPage from './pages/Appointment'
+import AboutPage from './pages/About'
+import CentersPage from './pages/Centers'
+import ServicesPage from './pages/Services'
+import DoctorsPage from './pages/Doctors'
+import NewsPage from './pages/News'
+import ContactPage from './pages/Contact'
 import './App.css'
 
 function Home() {
@@ -77,20 +83,29 @@ function Home() {
         </div>
       </div>
 
-      {/* Navbar */}
+      {/* Navbar with dropdown */}
       <nav className="navbar">
         <div className="container navbar-inner">
           <button className="btn btn-outline mobile-only" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
             Menu
           </button>
           <div className="nav-links" style={{ display: isMenuOpen ? 'flex' : undefined }}>
-            <a className="nav-link" href="#home">Home</a>
-            <a className="nav-link" href="#centers">Centers of Excellence</a>
-            <a className="nav-link" href="#services">Services</a>
-            <a className="nav-link" href="#doctors">Doctors</a>
+            <Link className="nav-link" to="/">Home</Link>
+            <div className="nav-link dropdown">
+              <span className="dropdown-toggle">Centers</span>
+              <div className="dropdown-menu">
+                {['Cardiac Sciences', 'Neurosciences', 'Orthopedics', 'Gastroenterology', 'Oncology', 'Pulmonology', 'Nephrology', 'Women & Child Care'].map((c) => (
+                  <a key={c} href="#centers">{c}</a>
+                ))}
+                <Link to="/centers">View All Centers</Link>
+              </div>
+            </div>
+            <Link className="nav-link" to="/services">Services</Link>
+            <Link className="nav-link" to="/doctors">Doctors</Link>
             <Link className="nav-link" to="/appointment">Appointment</Link>
-            <a className="nav-link" href="#news">News</a>
-            <a className="nav-link" href="#contact">Contact</a>
+            <Link className="nav-link" to="/news">News</Link>
+            <Link className="nav-link" to="/about">About</Link>
+            <Link className="nav-link" to="/contact">Contact</Link>
           </div>
         </div>
       </nav>
@@ -129,8 +144,8 @@ function Home() {
         <div className="container grid grid-4">
           {[
             { title: 'Book Appointment', desc: 'Schedule a visit with our specialists', href: '/appointment', color: '#e0f2fe', emoji: '📅', isRoute: true },
-            { title: 'Find a Doctor', desc: 'Search by name or speciality', href: '#doctors', color: '#dcfce7', emoji: '👩‍⚕️' },
-            { title: 'Departments', desc: 'Centers of Excellence', href: '#centers', color: '#fde68a', emoji: '🏥' },
+            { title: 'Find a Doctor', desc: 'Search by name or speciality', href: '/doctors', color: '#dcfce7', emoji: '👩‍⚕️', isRoute: true },
+            { title: 'Departments', desc: 'Centers of Excellence', href: '/centers', color: '#fde68a', emoji: '🏥', isRoute: true },
             { title: '24/7 Emergency', desc: 'Rapid response and ambulances', href: 'tel:+1800123456', color: '#fee2e2', emoji: '🚑' },
           ].map((q) => (
             q.isRoute ? (
@@ -151,6 +166,19 @@ function Home() {
               </a>
             )
           ))}
+        </div>
+      </section>
+
+      {/* Emergency banner */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="emergency-banner">
+            <div>
+              <strong>Emergency & Trauma Care</strong>
+              <div>24/7 Ambulance and Critical Care Response</div>
+            </div>
+            <a href="tel:+1800123456">Call Now</a>
+          </div>
         </div>
       </section>
 
@@ -197,6 +225,46 @@ function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Facilities */}
+      <section className="section facilities">
+        <div className="container">
+          <h2 className="section-title">Facilities & Technology</h2>
+          <p className="section-subtitle">Modern infrastructure to support superior outcomes</p>
+          <div className="grid grid-4">
+            {[
+              { title: '24/7 ICU', emoji: '🏥' },
+              { title: 'Modular OTs', emoji: '🛠️' },
+              { title: 'Cath Lab', emoji: '🫀' },
+              { title: 'MRI & CT', emoji: '🧲' },
+              { title: 'Dialysis', emoji: '💧' },
+              { title: 'Pharmacy', emoji: '💊' },
+              { title: 'Ambulance', emoji: '🚑' },
+              { title: 'Cafeteria', emoji: '☕' },
+            ].map((f) => (
+              <div key={f.title} className="facility-card">
+                <div className="f-icon" aria-hidden>{f.emoji}</div>
+                <div style={{ fontWeight: 700 }}>{f.title}</div>
+                <div className="qc-desc">Round-the-clock availability</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* International patients */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container international">
+          <div>
+            <h3 style={{ marginTop: 0 }}>International Patients</h3>
+            <p className="section-subtitle" style={{ margin: 0 }}>End-to-end assistance for travel, stay, and treatment planning</p>
+            <div style={{ marginTop: 12 }}>
+              <a className="btn btn-primary" href="#">Plan Your Visit</a>
+            </div>
+          </div>
+          <div style={{ display: 'grid', placeItems: 'center' }}>🌍</div>
         </div>
       </section>
 
@@ -267,11 +335,13 @@ function Home() {
           <div>
             <h4>Quick Links</h4>
             <div style={{ display: 'grid', gap: 8 }}>
-              <a href="#services">Services</a>
-              <a href="#centers">Centers</a>
-              <a href="#doctors">Doctors</a>
+              <Link to="/services">Services</Link>
+              <Link to="/centers">Centers</Link>
+              <Link to="/doctors">Doctors</Link>
               <Link to="/appointment">Appointment</Link>
-              <a href="#news">News</a>
+              <Link to="/news">News</Link>
+              <Link to="/about">About</Link>
+              <Link to="/contact">Contact</Link>
             </div>
           </div>
           <div>
@@ -309,7 +379,13 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/centers" element={<CentersPage />} />
+      <Route path="/services" element={<ServicesPage />} />
+      <Route path="/doctors" element={<DoctorsPage />} />
       <Route path="/appointment" element={<AppointmentPage />} />
+      <Route path="/news" element={<NewsPage />} />
+      <Route path="/contact" element={<ContactPage />} />
     </Routes>
   )
 }

@@ -1,0 +1,157 @@
+/* Top bar */
+.topbar {
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 14px;
+}
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+}
+.topbar a { color: var(--muted); }
+
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--primary);
+}
+.brand small {
+  color: var(--muted);
+  font-weight: 600;
+}
+.nav-links {
+  display: none;
+  gap: 20px;
+}
+.nav-link { color: #0b1727; font-weight: 600; }
+.nav-cta { display: none; }
+
+@media (min-width: 900px) {
+  .nav-links { display: flex; }
+  .nav-cta { display: inline-flex; }
+}
+
+/* Hero */
+.hero {
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(14,165,233,.2), transparent),
+              radial-gradient(800px 500px at 80% 20%, rgba(15,118,110,.15), transparent),
+              linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 48px 0 28px 0;
+}
+.hero h1 {
+  font-size: 40px;
+  line-height: 1.2;
+  margin: 0 0 12px 0;
+}
+.hero p { color: var(--muted); margin: 0 0 20px 0; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+.stat { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; text-align: center; }
+.stat strong { font-size: 20px; }
+
+@media (min-width: 900px) {
+  .hero-inner { grid-template-columns: 1.2fr .8fr; align-items: center; padding: 72px 0 48px 0; }
+  .hero h1 { font-size: 56px; }
+}
+
+/* Services */
+.services .card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.services .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(2,8,23,0.06);
+}
+.card .icon {
+  width: 42px; height: 42px; border-radius: 12px; background: var(--surface);
+  display: inline-flex; align-items: center; justify-content: center; color: var(--primary);
+}
+.card h3 { margin: 12px 0 8px 0; font-size: 18px; }
+.card p { margin: 0; color: var(--muted); }
+
+/* About */
+.about {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+.about-inner {
+  display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center;
+}
+.about .img-holder { background: #e2f2fb; border-radius: 16px; aspect-ratio: 4/3; }
+.about .content p { color: var(--muted); }
+
+@media (min-width: 900px) {
+  .about-inner { grid-template-columns: 1fr 1fr; }
+}
+
+/* Stats band */
+.band {
+  background: var(--primary);
+  color: #fff;
+}
+.band .band-inner { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; text-align: center; }
+.band-item { padding: 16px; }
+.band-item strong { font-size: 24px; display: block; }
+@media (min-width: 900px) {
+  .band .band-inner { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* Doctors */
+.doctors .doc-card {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; text-align: center;
+}
+.doc-avatar { width: 96px; height: 96px; border-radius: 999px; margin: 0 auto 12px auto; background: #e9f5ff; display: grid; place-items: center; color: var(--primary); font-weight: 700; }
+.doc-role { color: var(--muted); font-size: 14px; }
+
+/* Testimonials */
+.testimonials .quote {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; font-style: italic;
+}
+
+/* CTA */
+.cta {
+  background: linear-gradient(180deg, #e0f2fe 0%, #f0fdfa 100%);
+  border: 1px solid #bae6fd;
+  padding: 28px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+/* Footer */
+.footer { background: #0b1727; color: #cbd5e1; }
+.footer a { color: #cbd5e1; }
+.footer .footer-inner { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+.footer h4 { color: #fff; margin: 0 0 12px 0; }
+.footer .bottom { border-top: 1px solid #1f2937; padding: 16px 0; color: #94a3b8; font-size: 14px; }
+@media (min-width: 900px) {
+  .footer .footer-inner { grid-template-columns: 2fr 1fr 1fr 1fr; }
+}

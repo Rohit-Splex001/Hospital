@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link, Route, Routes } from 'react-router-dom'
+import AppointmentPage from './pages/Appointment'
 import './App.css'
 
-function App() {
+function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   // Hero slider
@@ -62,7 +64,7 @@ function App() {
       <div className="header-row">
         <div className="container header-row-inner">
           <div className="brand">
-            <span>Life Care Hospital</span>
+            <Link to="/">Life Care Hospital</Link>
             <small>Compassion. Excellence. Trust.</small>
           </div>
           <div className="header-actions">
@@ -70,7 +72,7 @@ function App() {
               <input placeholder="Search doctors, departments..." aria-label="Search" />
               <button className="btn btn-primary">Search</button>
             </div>
-            <a className="btn btn-outline" href="#appointment">Book Appointment</a>
+            <Link className="btn btn-outline" to="/appointment">Book Appointment</Link>
           </div>
         </div>
       </div>
@@ -86,7 +88,7 @@ function App() {
             <a className="nav-link" href="#centers">Centers of Excellence</a>
             <a className="nav-link" href="#services">Services</a>
             <a className="nav-link" href="#doctors">Doctors</a>
-            <a className="nav-link" href="#appointment">Appointment</a>
+            <Link className="nav-link" to="/appointment">Appointment</Link>
             <a className="nav-link" href="#news">News</a>
             <a className="nav-link" href="#contact">Contact</a>
           </div>
@@ -109,7 +111,7 @@ function App() {
               <h1>{s.title}</h1>
               <p>{s.subtitle}</p>
               <div className="hero-actions">
-                <a className="btn btn-primary" href={i === 0 ? '#appointment' : i === 1 ? '#doctors' : '#services'}>{s.cta}</a>
+                <Link className="btn btn-primary" to="/appointment">{s.cta}</Link>
                 <a className="btn btn-outline" href="#centers">Explore Centers</a>
               </div>
             </div>
@@ -126,18 +128,28 @@ function App() {
       <section className="section quick-links">
         <div className="container grid grid-4">
           {[
-            { title: 'Book Appointment', desc: 'Schedule a visit with our specialists', href: '#appointment', color: '#e0f2fe', emoji: '📅' },
+            { title: 'Book Appointment', desc: 'Schedule a visit with our specialists', href: '/appointment', color: '#e0f2fe', emoji: '📅', isRoute: true },
             { title: 'Find a Doctor', desc: 'Search by name or speciality', href: '#doctors', color: '#dcfce7', emoji: '👩‍⚕️' },
             { title: 'Departments', desc: 'Centers of Excellence', href: '#centers', color: '#fde68a', emoji: '🏥' },
             { title: '24/7 Emergency', desc: 'Rapid response and ambulances', href: 'tel:+1800123456', color: '#fee2e2', emoji: '🚑' },
           ].map((q) => (
-            <a key={q.title} className="quick-card" href={q.href} style={{ background: q.color }}>
-              <div className="qc-emoji" aria-hidden>{q.emoji}</div>
-              <div>
-                <div className="qc-title">{q.title}</div>
-                <div className="qc-desc">{q.desc}</div>
-              </div>
-            </a>
+            q.isRoute ? (
+              <Link key={q.title} className="quick-card" to={q.href} style={{ background: q.color }}>
+                <div className="qc-emoji" aria-hidden>{q.emoji}</div>
+                <div>
+                  <div className="qc-title">{q.title}</div>
+                  <div className="qc-desc">{q.desc}</div>
+                </div>
+              </Link>
+            ) : (
+              <a key={q.title} className="quick-card" href={q.href} style={{ background: q.color }}>
+                <div className="qc-emoji" aria-hidden>{q.emoji}</div>
+                <div>
+                  <div className="qc-title">{q.title}</div>
+                  <div className="qc-desc">{q.desc}</div>
+                </div>
+              </a>
+            )
           ))}
         </div>
       </section>
@@ -188,27 +200,12 @@ function App() {
         </div>
       </section>
 
-      {/* Appointment form */}
+      {/* Appointment snippet */}
       <section id="appointment" className="section appointment">
         <div className="container">
           <h2 className="section-title">Book an Appointment</h2>
           <p className="section-subtitle">We will get back to you shortly to confirm your slot</p>
-          <form className="appt-form" onSubmit={(e) => { e.preventDefault(); alert('Appointment request submitted!') }}>
-            <div className="grid">
-              <input placeholder="Full Name" required />
-              <input placeholder="Phone Number" type="tel" required />
-              <select defaultValue="" required>
-                <option value="" disabled>Department</option>
-                <option>Cardiology</option>
-                <option>Orthopedics</option>
-                <option>Neurology</option>
-                <option>Pediatrics</option>
-              </select>
-              <input type="date" required />
-              <textarea placeholder="Message (optional)" rows={3} />
-            </div>
-            <button className="btn btn-primary" type="submit">Submit</button>
-          </form>
+          <Link className="btn btn-primary" to="/appointment">Go to Appointment Page</Link>
         </div>
       </section>
 
@@ -273,7 +270,7 @@ function App() {
               <a href="#services">Services</a>
               <a href="#centers">Centers</a>
               <a href="#doctors">Doctors</a>
-              <a href="#appointment">Appointment</a>
+              <Link to="/appointment">Appointment</Link>
               <a href="#news">News</a>
             </div>
           </div>
@@ -308,4 +305,11 @@ function App() {
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/appointment" element={<AppointmentPage />} />
+    </Routes>
+  )
+}

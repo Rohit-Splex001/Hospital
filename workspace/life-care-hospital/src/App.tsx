@@ -1,0 +1,311 @@
+import { useEffect, useRef, useState } from 'react'
+import './App.css'
+
+function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Hero slider
+  const slides = [
+    {
+      title: 'Advanced Care, Trusted Experts',
+      subtitle: 'Comprehensive multi-speciality hospital with 24/7 emergency services.',
+      cta: 'Book Appointment',
+      image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=1600&auto=format&fit=crop',
+    },
+    {
+      title: 'Your Health, Our Priority',
+      subtitle: 'State-of-the-art ICUs, OTs, diagnostics, and specialized centers of excellence.',
+      cta: 'Find a Doctor',
+      image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop',
+    },
+    {
+      title: 'Compassionate, Patient-First Care',
+      subtitle: 'Personalized treatment plans led by experienced specialists.',
+      cta: 'Explore Services',
+      image: 'https://images.unsplash.com/photo-1583912086096-8f1e9b1b274f?q=80&w=1600&auto=format&fit=crop',
+    },
+  ]
+  const [activeSlide, setActiveSlide] = useState(0)
+  const intervalRef = useRef<number | null>(null)
+  useEffect(() => {
+    intervalRef.current = window.setInterval(() => {
+      setActiveSlide((s) => (s + 1) % slides.length)
+    }, 5000)
+    return () => { if (intervalRef.current) window.clearInterval(intervalRef.current) }
+  }, [])
+
+  // Testimonials
+  const testimonials = [
+    { name: 'Priya K', text: 'Outstanding care and courteous staff. The doctors explained everything clearly.', rating: 5 },
+    { name: 'Rahul S', text: 'Emergency team was quick and professional. Highly recommended.', rating: 5 },
+    { name: 'Meera V', text: 'Clean facilities and very organized. Felt well cared for.', rating: 4 },
+  ]
+  const [testimonialIndex, setTestimonialIndex] = useState(0)
+
+  return (
+    <>
+      {/* Top info bar */}
+      <div className="topbar">
+        <div className="container topbar-inner">
+          <div className="topbar-left">
+            <span>🕑 24/7 Emergency</span>
+            <span>• NABH Standards</span>
+          </div>
+          <div className="topbar-right">
+            <a href="tel:+1800123456">📞 +1 800 123 456</a>
+            <a href="mailto:care@lifecarehospital.com">✉️ care@lifecarehospital.com</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Header row with logo and actions */}
+      <div className="header-row">
+        <div className="container header-row-inner">
+          <div className="brand">
+            <span>Life Care Hospital</span>
+            <small>Compassion. Excellence. Trust.</small>
+          </div>
+          <div className="header-actions">
+            <div className="search">
+              <input placeholder="Search doctors, departments..." aria-label="Search" />
+              <button className="btn btn-primary">Search</button>
+            </div>
+            <a className="btn btn-outline" href="#appointment">Book Appointment</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="container navbar-inner">
+          <button className="btn btn-outline mobile-only" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
+            Menu
+          </button>
+          <div className="nav-links" style={{ display: isMenuOpen ? 'flex' : undefined }}>
+            <a className="nav-link" href="#home">Home</a>
+            <a className="nav-link" href="#centers">Centers of Excellence</a>
+            <a className="nav-link" href="#services">Services</a>
+            <a className="nav-link" href="#doctors">Doctors</a>
+            <a className="nav-link" href="#appointment">Appointment</a>
+            <a className="nav-link" href="#news">News</a>
+            <a className="nav-link" href="#contact">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero slider */}
+      <header id="home" className="hero hero-slider">
+        {slides.map((s, i) => (
+          <div
+            key={i}
+            className="hero-slide"
+            style={{
+              backgroundImage: `url(${s.image})`,
+              opacity: activeSlide === i ? 1 : 0,
+              pointerEvents: activeSlide === i ? 'auto' : 'none',
+            }}
+          >
+            <div className="container hero-content">
+              <h1>{s.title}</h1>
+              <p>{s.subtitle}</p>
+              <div className="hero-actions">
+                <a className="btn btn-primary" href={i === 0 ? '#appointment' : i === 1 ? '#doctors' : '#services'}>{s.cta}</a>
+                <a className="btn btn-outline" href="#centers">Explore Centers</a>
+              </div>
+            </div>
+          </div>
+        ))}
+        <div className="hero-dots">
+          {slides.map((_, i) => (
+            <button key={i} aria-label={`Slide ${i+1}`} className={`dot ${activeSlide === i ? 'active' : ''}`} onClick={() => setActiveSlide(i)} />
+          ))}
+        </div>
+      </header>
+
+      {/* Quick Links */}
+      <section className="section quick-links">
+        <div className="container grid grid-4">
+          {[
+            { title: 'Book Appointment', desc: 'Schedule a visit with our specialists', href: '#appointment', color: '#e0f2fe', emoji: '📅' },
+            { title: 'Find a Doctor', desc: 'Search by name or speciality', href: '#doctors', color: '#dcfce7', emoji: '👩‍⚕️' },
+            { title: 'Departments', desc: 'Centers of Excellence', href: '#centers', color: '#fde68a', emoji: '🏥' },
+            { title: '24/7 Emergency', desc: 'Rapid response and ambulances', href: 'tel:+1800123456', color: '#fee2e2', emoji: '🚑' },
+          ].map((q) => (
+            <a key={q.title} className="quick-card" href={q.href} style={{ background: q.color }}>
+              <div className="qc-emoji" aria-hidden>{q.emoji}</div>
+              <div>
+                <div className="qc-title">{q.title}</div>
+                <div className="qc-desc">{q.desc}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Centers of Excellence */}
+      <section id="centers" className="section centers">
+        <div className="container">
+          <h2 className="section-title">Centers of Excellence</h2>
+          <p className="section-subtitle">Dedicated units delivering specialized care</p>
+          <div className="grid grid-4">
+            {[
+              'Cardiac Sciences', 'Neurosciences', 'Orthopedics', 'Gastroenterology',
+              'Oncology', 'Pulmonology', 'Nephrology', 'Women & Child Care',
+            ].map((c) => (
+              <div key={c} className="card center-card">
+                <div className="icon" aria-hidden>🏥</div>
+                <h3>{c}</h3>
+                <p>World-class facility with experienced specialists.</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="section services">
+        <div className="container">
+          <h2 className="section-title">Our Services</h2>
+          <p className="section-subtitle">Comprehensive, patient-centered care across specialties</p>
+          <div className="grid grid-3">
+            {[
+              { title: 'Emergency Care', desc: '24/7 trauma and emergency services with rapid response.', emoji: '🚑' },
+              { title: 'Cardiology', desc: 'Advanced heart care and interventional cardiology.', emoji: '❤️' },
+              { title: 'Orthopedics', desc: 'Joint replacements, sports injuries, and spine care.', emoji: '🦴' },
+              { title: 'Neurology', desc: 'Brain and nerve care with state-of-the-art diagnostics.', emoji: '🧠' },
+              { title: 'Pediatrics', desc: 'Compassionate care for children from birth to teens.', emoji: '🧸' },
+              { title: 'Diagnostics', desc: 'High-precision imaging and laboratory services.', emoji: '🧪' },
+            ].map((s) => (
+              <div key={s.title} className="card">
+                <div className="icon" aria-hidden>
+                  <span>{s.emoji}</span>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Appointment form */}
+      <section id="appointment" className="section appointment">
+        <div className="container">
+          <h2 className="section-title">Book an Appointment</h2>
+          <p className="section-subtitle">We will get back to you shortly to confirm your slot</p>
+          <form className="appt-form" onSubmit={(e) => { e.preventDefault(); alert('Appointment request submitted!') }}>
+            <div className="grid">
+              <input placeholder="Full Name" required />
+              <input placeholder="Phone Number" type="tel" required />
+              <select defaultValue="" required>
+                <option value="" disabled>Department</option>
+                <option>Cardiology</option>
+                <option>Orthopedics</option>
+                <option>Neurology</option>
+                <option>Pediatrics</option>
+              </select>
+              <input type="date" required />
+              <textarea placeholder="Message (optional)" rows={3} />
+            </div>
+            <button className="btn btn-primary" type="submit">Submit</button>
+          </form>
+        </div>
+      </section>
+
+      {/* News & Updates */}
+      <section id="news" className="section news">
+        <div className="container">
+          <h2 className="section-title">News & Updates</h2>
+          <p className="section-subtitle">Latest announcements and health tips</p>
+          <div className="grid grid-3">
+            {[
+              { title: 'Free Cardiac Camp this Sunday', date: 'Aug 24, 2025' },
+              { title: 'Life Care launches new ICU', date: 'Jul 11, 2025' },
+              { title: 'World Health Day awareness drive', date: 'Apr 7, 2025' },
+            ].map((n) => (
+              <article key={n.title} className="news-card">
+                <div className="news-img" />
+                <div className="news-body">
+                  <h3>{n.title}</h3>
+                  <div className="news-meta">{n.date}</div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="section testimonials">
+        <div className="container">
+          <h2 className="section-title">What Patients Say</h2>
+          <div className="testi-wrap">
+            <button className="testi-nav" onClick={() => setTestimonialIndex((testimonialIndex - 1 + testimonials.length) % testimonials.length)}>‹</button>
+            <div className="quote">
+              <div className="stars" aria-label={`${testimonials[testimonialIndex].rating} star rating`}>
+                {'★'.repeat(testimonials[testimonialIndex].rating)}
+                {'☆'.repeat(5 - testimonials[testimonialIndex].rating)}
+              </div>
+              “{testimonials[testimonialIndex].text}”
+              <div className="q-author">— {testimonials[testimonialIndex].name}</div>
+            </div>
+            <button className="testi-nav" onClick={() => setTestimonialIndex((testimonialIndex + 1) % testimonials.length)}>›</button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="contact" className="footer">
+        <div className="container footer-inner">
+          <div>
+            <h4>Life Care Hospital</h4>
+            <p>Delivering compassionate, high-quality healthcare with modern facilities.</p>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <a href="#" aria-label="Facebook">👍</a>
+              <a href="#" aria-label="Twitter">🐦</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="YouTube">▶️</a>
+            </div>
+          </div>
+          <div>
+            <h4>Quick Links</h4>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <a href="#services">Services</a>
+              <a href="#centers">Centers</a>
+              <a href="#doctors">Doctors</a>
+              <a href="#appointment">Appointment</a>
+              <a href="#news">News</a>
+            </div>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <a href="tel:+1800123456">+1 800 123 456</a>
+              <a href="mailto:care@lifecarehospital.com">care@lifecarehospital.com</a>
+              <span>123, Health Avenue, City</span>
+            </div>
+          </div>
+          <div>
+            <h4>Newsletter</h4>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input aria-label="Email" placeholder="Enter your email" style={{ flex: 1, padding: '10px 12px', borderRadius: 999, border: '1px solid #334155', background: '#0f172a', color: '#e2e8f0' }} />
+              <button className="btn btn-primary">Subscribe</button>
+            </div>
+          </div>
+        </div>
+        <div className="bottom">
+          <div className="container bottom-inner">
+            <span>© {new Date().getFullYear()} Life Care Hospital. All rights reserved.</span>
+            <span>Made with ❤️ for better health.</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* Floating CTAs */}
+      <a className="float-cta whatsapp" href="#" aria-label="WhatsApp">💬</a>
+      <a className="float-cta call" href="tel:+1800123456" aria-label="Call Ambulance">🚑</a>
+    </>
+  )
+}
+
+export default App

@@ -110,3 +110,11 @@
   .grid-3 { grid-template-columns: repeat(3, 1fr); }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
 }
+
+
+/* Doctors */
+.doctors .doctor-card { text-align: center; }
+.doctors .doctor-img { background: #e2e8f0; width: 100%; min-height: 200px; }
+.doctors .doctor-speciality { color: var(--primary); font-weight: 600; margin: 4px 0; }
+.doctors .doctor-experience { color: var(--muted); font-size: 14px; margin: 4px 0; }
+.doctors .doctor-desc { color: var(--muted); font-size: 14px; margin: 12px 0; }

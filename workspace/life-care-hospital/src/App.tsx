@@ -10,19 +10,19 @@ function App() {
       title: 'Advanced Care, Trusted Experts',
       subtitle: 'Comprehensive multi-speciality hospital with 24/7 emergency services.',
       cta: 'Book Appointment',
-      image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=1600&auto=format&fit=crop',
+      image: '/images/hero-1.jpg',
     },
     {
       title: 'Your Health, Our Priority',
       subtitle: 'State-of-the-art ICUs, OTs, diagnostics, and specialized centers of excellence.',
       cta: 'Find a Doctor',
-      image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop',
+      image: '/images/hero-2.jpg',
     },
     {
       title: 'Compassionate, Patient-First Care',
       subtitle: 'Personalized treatment plans led by experienced specialists.',
       cta: 'Explore Services',
-      image: 'https://images.unsplash.com/photo-1583912086096-8f1e9b1b274f?q=80&w=1600&auto=format&fit=crop',
+      image: '/images/hero-3.jpg',
     },
   ]
   const [activeSlide, setActiveSlide] = useState(0)
@@ -188,6 +188,58 @@ function App() {
         </div>
       </section>
 
+      {/* Our Doctors */}
+      <section id="doctors" className="section doctors">
+        <div className="container">
+          <h2 className="section-title">Our Expert Doctors</h2>
+          <p className="section-subtitle">Experienced specialists dedicated to your health</p>
+          <div className="grid grid-3">
+            {[
+              { 
+                name: 'Dr. Sarah Johnson', 
+                speciality: 'Cardiologist', 
+                experience: '15 years',
+                image: '/images/doctor-1.jpg',
+                description: 'Expert in interventional cardiology and heart surgery.'
+              },
+              { 
+                name: 'Dr. Michael Chen', 
+                speciality: 'Orthopedic Surgeon', 
+                experience: '12 years',
+                image: '/images/doctor-2.jpg',
+                description: 'Specialist in joint replacement and sports medicine.'
+              },
+              { 
+                name: 'Dr. Emily Rodriguez', 
+                speciality: 'Pediatrician', 
+                experience: '10 years',
+                image: '/images/doctor-3.jpg',
+                description: 'Compassionate care for children and adolescents.'
+              },
+            ].map((doctor) => (
+              <div key={doctor.name} className="doctor-card">
+                <div 
+                  className="doctor-img"
+                  style={{
+                    backgroundImage: `url(${doctor.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    aspectRatio: '1/1',
+                    borderRadius: '12px',
+                    marginBottom: '16px'
+                  }}
+                />
+                <h3>{doctor.name}</h3>
+                <p className="doctor-speciality">{doctor.speciality}</p>
+                <p className="doctor-experience">{doctor.experience} experience</p>
+                <p className="doctor-desc">{doctor.description}</p>
+                <button className="btn btn-outline">Book Consultation</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Appointment form */}
       <section id="appointment" className="section appointment">
         <div className="container">
@@ -219,12 +271,19 @@ function App() {
           <p className="section-subtitle">Latest announcements and health tips</p>
           <div className="grid grid-3">
             {[
-              { title: 'Free Cardiac Camp this Sunday', date: 'Aug 24, 2025' },
-              { title: 'Life Care launches new ICU', date: 'Jul 11, 2025' },
-              { title: 'World Health Day awareness drive', date: 'Apr 7, 2025' },
+              { title: 'Free Cardiac Camp this Sunday', date: 'Aug 24, 2025', image: '/images/facility-1.jpg' },
+              { title: 'Life Care launches new ICU', date: 'Jul 11, 2025', image: '/images/facility-2.jpg' },
+              { title: 'World Health Day awareness drive', date: 'Apr 7, 2025', image: '/images/facility-3.jpg' },
             ].map((n) => (
               <article key={n.title} className="news-card">
-                <div className="news-img" />
+                <div 
+                  className="news-img" 
+                  style={{ 
+                    backgroundImage: `url(${n.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
                 <div className="news-body">
                   <h3>{n.title}</h3>
                   <div className="news-meta">{n.date}</div>
